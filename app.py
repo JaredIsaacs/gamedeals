@@ -2,6 +2,8 @@ import os
 import requests, json
 from flask import Flask, render_template
 
+#https://apidocs.cheapshark.com/#intro
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 
