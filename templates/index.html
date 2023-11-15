@@ -9,20 +9,19 @@
   </head>
 
   <body>
-    <form action="{{ url_for('index') }}" method="POST" >
-      <p>Search:</p>
-      {{ form.name(class='form_input') }}
-      <br>
-      <p>Min Price: </p>
-      {{ form.min_price(class='form_input') }}
-      <p>Max Price: </p>
-      {{ form.max_price(class='form_input') }}
-      <br>
-      {{ form.submit(class='form_input') }}
+    <form action="{{ url_for('index') }}" method="POST">
+      Search: {{ form.name(class='form_input', **{"onchange":"this.form.submit()"}) }}
+      Min Price: {{ form.min_price(class='form_input', **{"onchange":"this.form.submit()"}) }}
+      Max Price: {{ form.max_price(class='form_input', **{"onchange":"this.form.submit()"}) }}
     </form>
-
-    <br>
-
-    <p> {{ games }} </p>
+  {{ games[0] }}
+  <div class="wrapper">
+    {% for game in games %}
+      <div>
+        <img src="{{ game['thumb'] }}" width="220" height="100">
+        <p>{{ game['title'] }} {{ game['savings']|int }}%</p>
+      </div>
+    {% endfor %}
+  </div>
   </body>
 </html>
