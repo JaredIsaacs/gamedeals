@@ -6,6 +6,21 @@
     padding: 5%;
 }
 
+.thumb{
+    width: 220px;
+    height: 100px;
+}
+
+button{
+    border: 0px;
+    background-color:white;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: gray;
+}
+
 p{
     margin-top: 0;
 }

@@ -14,14 +14,16 @@
       Min Price: {{ form.min_price(class='form_input', **{"onchange":"this.form.submit()"}) }}
       Max Price: {{ form.max_price(class='form_input', **{"onchange":"this.form.submit()"}) }}
     </form>
-  {{ games[0] }}
-  <div class="wrapper">
-    {% for game in games %}
-      <div>
-        <img src="{{ game['thumb'] }}" width="220" height="100">
-        <p>{{ game['title'] }} {{ game['savings']|int }}%</p>
-      </div>
-    {% endfor %}
-  </div>
+    {{ games[0] }}
+    <div class="wrapper">
+      {% for game in games %}
+        <div>
+          <form action="{{ url_for('game') }}" method="POST">
+            <button type="submit" name="submit_button" value="{{ game['gameID'] }}"><img src="{{ game['thumb'] }}" class='thumb'></button>
+          </form>
+          <p>{{ game['title'] }} {{ game['savings']|int }}%</p>
+        </div>
+      {% endfor %}
+    </div>
   </body>
 </html>
