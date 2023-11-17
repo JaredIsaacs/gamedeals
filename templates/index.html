@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Document</title>
+    <title>Game Deals</title>
   </head>
 
   <body>
@@ -14,16 +14,19 @@
       Min Price: {{ form.min_price(class='form_input', **{"onchange":"this.form.submit()"}) }}
       Max Price: {{ form.max_price(class='form_input', **{"onchange":"this.form.submit()"}) }}
     </form>
-    {{ games[0] }}
-    <div class="wrapper">
-      {% for game in games %}
-        <div>
-          <form action="{{ url_for('game') }}" method="POST">
-            <button type="submit" name="submit_button" value="{{ game['gameID'] }}"><img src="{{ game['thumb'] }}" class='thumb'></button>
-          </form>
-          <p>{{ game['title'] }} {{ game['savings']|int }}%</p>
-        </div>
-      {% endfor %}
+    {% if games %}
+      <div class="game-wrapper">
+        {% for game in games %}
+          <div>
+            <form action="{{ url_for('game') }}" method="POST">
+              <button type="submit" name="submit_button" value="{{ game['gameID'] }}"><img src="{{ thumb_urls[game['gameID']] }}" class='thumb'></button>
+            </form>
+            <p>{{ game['title'] }} {{ game['savings']|int }}%</p>
+          </div>
+        {% endfor %}
+    {% else %}
+      <h1>Reached Rate Limit!</h1> 
+    {% endif %}
     </div>
   </body>
 </html>

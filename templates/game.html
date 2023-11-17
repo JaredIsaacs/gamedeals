@@ -1,2 +1,13 @@
-this is the game {{ game }}
-<img src="https://cdn.akamai.steamstatic.com/steam/apps/{{ game['info']['steamAppID'] }}/header.jpg">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ game['info']['title'] }}</title>
+</head>
+<body>
+    this is the game {{ game }}
+    <img src="https://cdn.akamai.steamstatic.com/steam/apps/{{ game['info']['steamAppID'] }}/header.jpg">
+</body>
+</html>
+

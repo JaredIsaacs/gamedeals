@@ -1,6 +1,6 @@
-.wrapper{
+.game-wrapper{
     display: grid;
-    grid-template-columns: repeat(3, 300px);
+    grid-template-columns: repeat(3, 220px);
     margin: auto;
     width: 50%;
     padding: 5%;
@@ -23,4 +23,5 @@ button:hover{
 
 p{
     margin-top: 0;
+    text-align: center;
 }

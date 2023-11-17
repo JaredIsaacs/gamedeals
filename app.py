@@ -31,7 +31,7 @@ def get_deals(title: str = '', lower_price: float = DEFAULT_MIN_PRICE, upper_pri
     return response
 
 
-def get_game(gameid: int):
+def get_game(gameid: int) -> dict:
     global BASE_URL
 
     url = BASE_URL + 'games?id={}'
@@ -39,19 +39,48 @@ def get_game(gameid: int):
     return response
 
 
+def get_urls(games: list[dict]) -> dict:
+    '''
+    Takes a list of game dictionaries and returns a dictionary
+    that correlates a games cheapshark ID with the games steam thumbnail url.
+
+    steamshark_id -> steam_url
+
+    Gets the thumbnail that is displayed on the steam main page.
+    The default thumbnails that cheapshark provides are in a very small resolution.
+    '''
+    steam_url = 'https://cdn.akamai.steamstatic.com/steam/apps/{0}/header.jpg'
+    game_urls = {}
+
+    if 'error' in games:
+        raise Exception('Rate limit reached.')
+
+    for game in games:
+        game_urls[game['gameID']] = steam_url.format(game['steamAppID'])
+
+    return game_urls
+
+
 @app.route('/', methods=["GET", "POST"])
 def index():
     form = Menus()
     
-    if request.method == 'POST':
-        game_name = form.name.data
-        min_price = form.min_price.data
-        max_price = form.max_price.data
-        games = get_deals(lower_price=min_price, upper_price=max_price, title=game_name)
-        return render_template('index.html', form=form, games=games)
+    try:
+        if request.method == 'POST':
+            game_name = form.name.data
+            min_price = form.min_price.data
+            max_price = form.max_price.data
 
-    games = get_deals()
-    return render_template('index.html', form=form, games=games)
+            games = get_deals(lower_price=min_price, upper_price=max_price, title=game_name)
+            thumb_urls = get_urls(games=games)
+
+            return render_template('index.html', form=form, games=games, thumb_urls=thumb_urls)
+
+        games = get_deals()
+        thumb_urls = get_urls(games=games)
+        return render_template('index.html', form=form, games=games, thumb_urls=thumb_urls)
+    except Exception as e:
+        return render_template('index.html', form=form, games=[], thumb_urls={})
 
 
 @app.route('/game', methods=["POST"])
