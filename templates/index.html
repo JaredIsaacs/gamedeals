@@ -15,7 +15,8 @@
       Max Price: {{ form.max_price(class='form_input', **{"onchange":"this.form.submit()"}) }}
     </form>
     {% if games %}
-      <div class="game-wrapper">
+      <div class="wrapper">
+        <div class="container">
         {% for game in games %}
           <div>
             <form action="{{ url_for('game') }}" method="POST">
@@ -24,9 +25,10 @@
             <p>{{ game['title'] }} {{ game['savings']|int }}%</p>
           </div>
         {% endfor %}
+        </div>
+      </div>
     {% else %}
       <h1>Reached Rate Limit!</h1> 
     {% endif %}
-    </div>
   </body>
 </html>

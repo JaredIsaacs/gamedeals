@@ -39,12 +39,12 @@ def get_game(gameid: int) -> dict:
     return response
 
 
-def get_urls(games: list[dict]) -> dict:
+def get_img_urls(games: list[dict]) -> dict:
     '''
     Takes a list of game dictionaries and returns a dictionary
     that correlates a games cheapshark ID with the games steam thumbnail url.
 
-    steamshark_id -> steam_url
+    steamshark_id -> steam_img_url
 
     Gets the thumbnail that is displayed on the steam main page.
     The default thumbnails that cheapshark provides are in a very small resolution.
@@ -72,12 +72,12 @@ def index():
             max_price = form.max_price.data
 
             games = get_deals(lower_price=min_price, upper_price=max_price, title=game_name)
-            thumb_urls = get_urls(games=games)
+            thumb_urls = get_img_urls(games=games)
 
             return render_template('index.html', form=form, games=games, thumb_urls=thumb_urls)
 
         games = get_deals()
-        thumb_urls = get_urls(games=games)
+        thumb_urls = get_img_urls(games=games)
         return render_template('index.html', form=form, games=games, thumb_urls=thumb_urls)
     except Exception as e:
         return render_template('index.html', form=form, games=[], thumb_urls={})
