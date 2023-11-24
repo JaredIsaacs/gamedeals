@@ -120,5 +120,4 @@ def game():
 
 
 if __name__ == '__main__':
-    print(get_game('elder scrolls'))
     app.run(debug=True, port=8080)
