@@ -1,5 +1,6 @@
 import os
 import requests, json
+from dotenv import load_dotenv
 from flask import Flask, request, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, SubmitField
@@ -11,8 +12,10 @@ DEFAULT_MIN_PRICE = 0
 DEFAULT_MAX_PRICE = 60
 BASE_URL = 'https://www.cheapshark.com/api/1.0/'
 
+load_dotenv()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
+
 
 class Menus(FlaskForm):
     global DEFAULT_MIN_PRICE, DEFAULT_MAX_PRICE
@@ -23,6 +26,7 @@ class Menus(FlaskForm):
     max_price = DecimalField('Maximum Price', default=DEFAULT_MAX_PRICE)
     submit = SubmitField('Search!')
 
+
 def get_deals(title: str = '', lower_price: float = DEFAULT_MIN_PRICE, upper_price: float = DEFAULT_MAX_PRICE, page_number: int = 0) -> dict:
     global BASE_URL
 
@@ -31,7 +35,7 @@ def get_deals(title: str = '', lower_price: float = DEFAULT_MIN_PRICE, upper_pri
     return response
 
 
-def get_game(gameid: int) -> dict:
+def get_deal(gameid: int) -> dict:
     global BASE_URL
 
     url = BASE_URL + 'games?id={}'
@@ -61,6 +65,27 @@ def get_img_urls(games: list[dict]) -> dict:
     return game_urls
 
 
+def generate_access_token() -> str:
+    url = 'https://id.twitch.tv/oauth2/token?client_id={0}&client_secret={1}&grant_type=client_credentials'
+    client_id = os.getenv('CLIENT_ID')
+    client_token = os.getenv('CLIENT_TOKEN')
+
+    response = requests.post(url.format(client_id, client_token)).json()
+    return response['access_token']
+
+
+def get_game(game_name: str) -> dict:
+    url = 'https://api.igdb.com/v4/games'
+    client_id = os.getenv('CLIENT_ID')
+    access_token = 'Bearer ' + generate_access_token()
+
+    response = requests.post(url, **{
+                                        'headers': {'Client-ID': client_id, 'Authorization': access_token},
+                                        'data': 'search "{0}"; fields name, summary;'.format(game_name)
+                                    }).json()
+    return response
+
+
 @app.route('/', methods=["GET", "POST"])
 def index():
     form = Menus()
@@ -86,9 +111,10 @@ def index():
 @app.route('/game', methods=["POST"])
 def game():
     gameid = request.form['submit_button']
-    game = get_game(gameid=gameid)
-    return render_template('game.html', game=game)
+    deal = get_deal(gameid=gameid)
+    return render_template('game.html', game=deal)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    print(get_game('elder scrolls'))
+    #app.run(debug=True, port=8080)
