@@ -1,33 +1,67 @@
+body{
+    background-color: gainsboro;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 .wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #222831;
+    border-radius: 2%;
+    padding-top: 15px;
+    margin: 5px auto 0;
+    width: 50%;
 }
+
+.inputs{
+    display: flex;
+    justify-content: center;
+}
+
+.form_input{
+    margin-right: 10px;
+    font-size: large;
+    border-radius: 10px;
+    border: 0;
+    width: 23%;
+    height: 100%;
+}
+
 
 .container{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 5px;    
-    max-width: 50%;
+    text-align: center;
 }
 
+.game-text{
+    color: white;
+    margin-top: 0;
+    text-align: center;
+}
+
+.game-text s{
+    color: red;
+}
+
+
 .thumb{
+    border-radius: 3%;
     width: 270px;
     height: 135px;
 }
 
 button{
+    background-color: #222831;
     border: 0px;
-    background-color:white;
+    padding: 1%;
+    padding-bottom: 0;
 }
 
 button:hover{
+    border-radius: 3%;
     cursor: pointer;
-    background-color: gray;
-}
-
-p{
-    margin-top: 0;
-    text-align: center;
-    padding-right: 100px;
+    background-color: #EEEEEE;
 }
