@@ -35,11 +35,11 @@ def get_deals(title: str = '', lower_price: float = DEFAULT_MIN_PRICE, upper_pri
     return response
 
 
-def get_deal(gameid: int) -> dict:
+def get_deal(deal_id: int) -> dict:
     global BASE_URL
 
-    url = BASE_URL + 'games?id={}'
-    response = requests.get(url.format(gameid)).json()
+    url = BASE_URL + 'deals?id={}'
+    response = requests.get(url.format(deal_id)).json()
     return response
 
 
@@ -81,7 +81,7 @@ def get_game(game_name: str) -> dict:
 
     response = requests.post(url, **{
                                         'headers': {'Client-ID': client_id, 'Authorization': access_token},
-                                        'data': 'search "{0}"; fields name, summary;'.format(game_name)
+                                        'data': 'where name = "{0}"; fields name, videos, summary;'.format(game_name)
                                     }).json()
     return response
 
@@ -110,11 +110,15 @@ def index():
 
 @app.route('/game', methods=["POST"])
 def game():
-    gameid = request.form['submit_button']
-    deal = get_deal(gameid=gameid)
-    return render_template('game.html', game=deal)
+    deal_id = request.form['submit_button']
+
+    deal = get_deal(deal_id)
+    game_name = deal['gameInfo']['name']
+    game = get_game(game_name)
+
+    return render_template('game.html', deal=deal, game=game)
 
 
 if __name__ == '__main__':
     print(get_game('elder scrolls'))
-    #app.run(debug=True, port=8080)
+    app.run(debug=True, port=8080)

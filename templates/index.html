@@ -20,7 +20,7 @@
         {% for game in games %}
           <div>
             <form action="{{ url_for('game') }}" method="POST">
-              <button type="submit" name="submit_button" value="{{ game['gameID'] }}"><img src="{{ thumb_urls[game['gameID']] }}" class='thumb'></button>
+              <button type="submit" name="submit_button" value="{{ game['dealID'] }}"><img src="{{ thumb_urls[game['gameID']] }}" class='thumb'></button>
             </form>
             <p>{{ game['title'] }} {{ game['savings']|int }}%</p>
           </div>
