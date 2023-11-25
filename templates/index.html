@@ -17,8 +17,8 @@
       </form>
     </div>
     {% if games %}
-      <div class="wrapper">
-        <div class="container">
+      <div class="column-wrapper">
+        <div class="columns">
         {% for game in games %}
           <div class = game>
             <form action="{{ url_for('game') }}" method="POST">

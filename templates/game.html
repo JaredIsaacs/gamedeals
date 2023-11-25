@@ -12,8 +12,13 @@
     {{deal}}
     <br><br>
     {{game}}
-    <div class="wrapper">
-      <img src="https://cdn.akamai.steamstatic.com/steam/apps/{{ deal['gameInfo']['steamAppID'] }}/header.jpg">
+    <div class="game-wrapper">
+      <div class="column">
+        <img class="header" src="https://cdn.akamai.steamstatic.com/steam/apps/{{ deal['gameInfo']['steamAppID'] }}/header.jpg">
+      </div>
+      <div class="column">
+        <div class="game-summary">{{game[0]['summary']}}</div>
+      </div>
     </div>
   </body>
 </html>

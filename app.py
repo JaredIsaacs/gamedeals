@@ -83,6 +83,16 @@ def get_game(game_name: str) -> dict:
                                         'headers': {'Client-ID': client_id, 'Authorization': access_token},
                                         'data': 'where name = "{0}"; fields name, videos, summary;'.format(game_name)
                                     }).json()
+    
+    #Get the oldest version of the game on steam if there a duplicates
+    if len(response) > 1:
+        game = [{'id': '999999999'}]
+        for g in response:
+            if int(g['id']) < int(game[0]['id']):
+                game[0] = g
+        return game
+    
+
     return response
 
 

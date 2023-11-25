@@ -4,15 +4,20 @@ body{
     overflow: hidden;
 }
 
-.wrapper{
-    display: flex;
-    justify-content: center;
+.column-wrapper{
     align-items: center;
     background-color: #222831;
     border-radius: 2%;
     padding-top: 15px;
     margin: 5px auto 0;
     width: 50%;
+}
+
+.columns{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 5px;    
+    text-align: center;
 }
 
 .inputs{
@@ -29,14 +34,6 @@ body{
     height: 100%;
 }
 
-
-.container{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 5px;    
-    text-align: center;
-}
-
 .game-text{
     color: white;
     margin-top: 0;
@@ -47,11 +44,44 @@ body{
     color: red;
 }
 
+.game-wrapper{
+    display: flex;
+    justify-content: flex-start;
+    background-color: #222831;
+    border-radius: 2%;
+    padding: 15px;
+    margin: 5px auto 0;
+    width: 50%;
+}
+
+.column{
+    flex: 1;
+}
+
+.game-title{
+    width: 100%;
+    text-align: center;
+    color: gainsboro;
+    font-size: 50px;
+    font-family: fantasy;
+}
+
+.game-summary{
+    padding-top: 5%;
+    place-items: center;
+    color: gainsboro;
+}
 
 .thumb{
     border-radius: 3%;
     width: 270px;
     height: 135px;
+}
+
+.header{
+    display: flex;
+    border-radius: 5%;
+    justify-content: flex-start;
 }
 
 button{
