@@ -9,15 +9,25 @@
   </head>
   
   <body>
-    {{deal}}
+    deal: {{deal}}
     <br><br>
-    {{game}}
+    game: {{game}}
+    <br><br>
+    video: {{video}}
     <div class="game-wrapper">
       <div class="column">
         <img class="header" src="https://cdn.akamai.steamstatic.com/steam/apps/{{ deal['gameInfo']['steamAppID'] }}/header.jpg">
+        <iframe width="430" height="260" src="https://www.youtube.com/embed/{{video[0]['video_id']}}" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="column">
-        <div class="game-summary">{{game[0]['summary']}}</div>
+        <div class="game-info">{{game[0]['summary']}}</div>
+        <div class="game-info">
+          <a href="https://store.steampowered.com/app/{{deal['gameInfo']['steamAppID']}}">
+            <img class='button' src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png">
+          </a>
+          <div id="tag"><s>{{deal['gameInfo']['retailPrice']}}</s>  {{deal['gameInfo']['salePrice']}}</div>
+          <div class="rating"><img class="button" src="https://static.vecteezy.com/system/resources/thumbnails/001/189/165/small/star.png"> <div id="tag">{{deal['gameInfo']['steamRatingText']}}</div></div>
+        </div>
       </div>
     </div>
   </body>

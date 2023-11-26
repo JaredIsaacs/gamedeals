@@ -55,7 +55,12 @@ body{
 }
 
 .column{
+    padding-top: 2%;
     flex: 1;
+}
+
+.column iframe{
+    margin: 3%;
 }
 
 .game-title{
@@ -66,10 +71,10 @@ body{
     font-family: fantasy;
 }
 
-.game-summary{
-    padding-top: 5%;
+.game-info{
     place-items: center;
     color: gainsboro;
+    padding-bottom: 5%;
 }
 
 .thumb{
@@ -82,6 +87,27 @@ body{
     display: flex;
     border-radius: 5%;
     justify-content: flex-start;
+}
+
+.button{
+    height: 50px;
+    width: 50px;
+}
+
+.rating{
+    display: inline-block;
+    margin-left: 100px;
+}
+
+#tag{
+    display: inline-block;
+    text-align: left;
+    position: relative;
+    top: -15px;
+}
+
+a{
+    text-decoration: none;
 }
 
 button{
