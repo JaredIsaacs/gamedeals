@@ -80,14 +80,14 @@ def get_game(game_name: str) -> dict:
     access_token = 'Bearer ' + generate_access_token()
     game_request = {
                         'headers': {'Client-ID': client_id, 'Authorization': access_token},
-                        'data': 'where name = "{0}"; fields name, videos, summary;'.format(game_name)
+                        'data': 'where name = "{0}"; fields name, screenshots, summary;'.format(game_name)
                     }
 
     response = requests.post(url, **game_request).json()
     
     #If the game is not returned, search for it in a different, less precise way.
     if response == []:
-        game_request['data'] = 'search "{0}"; fields name, videos, summary;'.format(game_name)
+        game_request['data'] = 'search "{0}"; fields name, screenshots, summary;'.format(game_name)
         response = requests.post(url, **game_request).json()
 
     #Get the oldest version of the game on steam if there a duplicates
@@ -102,7 +102,7 @@ def get_game(game_name: str) -> dict:
     return response
 
 
-def get_video(game: dict) -> str:
+def get_video(game: dict) -> dict:
     client_id = os.getenv('CLIENT_ID')
     access_token = 'Bearer ' + generate_access_token()
 
@@ -111,15 +111,35 @@ def get_video(game: dict) -> str:
                                                                         'data': 'where game={}; fields checksum,game,name,video_id;'.format(game[0]['id'])
                                                                         }).json()
     
-    #Get odlest video, aka the release trailer.
+    
+    #Get oldest video, aka the release trailer.
     if len(response) > 1:
         video = [{'id': '0'}]
         for v in response:
             if int(v['id']) > int(video[0]['id']):
                 video[0] = v
         return video
+    elif len(response) == 0:
+        return [{'video_id': 'dQw4w9WgXcQ'}]
 
     return response
+
+
+def get_screenshots(game: dict) -> dict:
+    client_id = os.getenv('CLIENT_ID')
+    access_token = 'Bearer ' + generate_access_token()
+
+    response = requests.post('https://api.igdb.com/v4/screenshots', **{
+                                                                        'headers': {'Client-ID': client_id, 'Authorization': access_token},
+                                                                        'data': 'where game={}; fields url, image_id;'.format(game[0]['id'])
+                                                                        }).json()
+    
+    screenshots = []
+    for i in range(len(response)):
+        if i == 4:
+            break
+        screenshots.append(response[i])
+    return screenshots
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -152,8 +172,9 @@ def game():
     game_name = deal['gameInfo']['name']
     game = get_game(game_name)
     video = get_video(game)
+    screenshots = get_screenshots(game)
 
-    return render_template('game.html', deal=deal, game=game, video=video)
+    return render_template('game.html', deal=deal, game=game, video=video, screenshots=screenshots)
 
 
 if __name__ == '__main__':

@@ -9,11 +9,6 @@
   </head>
   
   <body>
-    deal: {{deal}}
-    <br><br>
-    game: {{game}}
-    <br><br>
-    video: {{video}}
     <div class="game-wrapper">
       <div class="column">
         <img class="header" src="https://cdn.akamai.steamstatic.com/steam/apps/{{ deal['gameInfo']['steamAppID'] }}/header.jpg">
@@ -25,8 +20,13 @@
           <a href="https://store.steampowered.com/app/{{deal['gameInfo']['steamAppID']}}">
             <img class='button' src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png">
           </a>
-          <div id="tag"><s>{{deal['gameInfo']['retailPrice']}}</s>  {{deal['gameInfo']['salePrice']}}</div>
-          <div class="rating"><img class="button" src="https://static.vecteezy.com/system/resources/thumbnails/001/189/165/small/star.png"> <div id="tag">{{deal['gameInfo']['steamRatingText']}}</div></div>
+          <div id="price-tag"><s>{{deal['gameInfo']['retailPrice']}}</s>  {{deal['gameInfo']['salePrice']}}</div>
+          <div class="rating"><img class="button" src="https://static.vecteezy.com/system/resources/thumbnails/001/189/165/small/star.png"> <div id="rating-tag">{{deal['gameInfo']['steamRatingText']}}</div></div>
+        </div>
+        <div class="screenshots">
+          {% for sc in screenshots %}
+            <img class="screenshot" src="https://images.igdb.com/igdb/image/upload/t_original/{{ sc['image_id'] }}.jpg">
+          {% endfor %}
         </div>
       </div>
     </div>

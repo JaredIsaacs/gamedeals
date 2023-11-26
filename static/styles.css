@@ -54,13 +54,15 @@ body{
     width: 50%;
 }
 
-.column{
-    padding-top: 2%;
+.column {
+    display: flex;
+    flex-direction: column;
     flex: 1;
 }
 
-.column iframe{
+.column iframe {
     margin: 3%;
+    margin-top: auto;
 }
 
 .game-title{
@@ -71,10 +73,12 @@ body{
     font-family: fantasy;
 }
 
-.game-info{
+.game-info {
+    display: flex;
     place-items: center;
     color: gainsboro;
-    padding-bottom: 5%;
+    padding: 5%;
+    padding-top: 0;
 }
 
 .thumb{
@@ -94,12 +98,33 @@ body{
     width: 50px;
 }
 
-.rating{
+.rating {
     display: inline-block;
-    margin-left: 100px;
+    margin-left: auto;
 }
 
-#tag{
+.screenshots {
+    margin-top: auto;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.screenshot{
+    height: 130px;
+    width: 230px;
+}
+
+#price-tag{
+    display: inline-block;
+    text-align: left;
+    position: relative;
+    top: 0px;
+}
+
+#rating-tag{
     display: inline-block;
     text-align: left;
     position: relative;
